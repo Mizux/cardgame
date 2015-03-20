@@ -1,0 +1,26 @@
+language: cpp
+
+compiler:
+ - clang
+ - gcc
+
+env:
+  matrix:
+    - CONF=debug
+    - CONF=release
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo add-apt-repository ppa:smspillaz/cmake-2.8.12 -y
+  - sudo apt-get update -qq
+  - sudo apt-get purge cmake -qq
+  - sudo apt-get install -qq cmake g++-4.9 libstdc++-4.9-dev
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 90
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 90
+  - sudo apt-get install -qq doxygen libboost-all-dev libqt4-dev
+
+before_script:
+  - mkdir build && cd build
+script:
+  - cmake -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=$CONF ..
+  - make
