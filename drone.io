@@ -29,3 +29,6 @@ cmake ..
 
 echo "Compile..."
 make VERBOSE=1
+
+echo "Test..."
+ctest

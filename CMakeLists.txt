@@ -15,6 +15,7 @@ set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
 set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
 set(INSTALL_CMAKE_DIR cmake/Modules CACHE PATH "Installation directory for CMake files")
+
 #####################
 ##  DOCUMENTATION  ##
 #####################
@@ -33,6 +34,7 @@ endforeach()
 ##############################
 set(CMAKE_CXX_STANDARD   11)
 set(CMAKE_CXX_EXTENSIONS OFF)
+enable_testing()
 
 ##################
 ##  GOOGLETEST  ##
