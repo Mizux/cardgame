@@ -1,38 +1,28 @@
 cmake_minimum_required(VERSION 3.2)
 project(CardGame)
 
-set(_MAJOR_VERSION 0)
-set(_MINOR_VERSION 1)
-set(_PATCH_VERSION 0)
-set(_VERSION ${_MAJOR_VERSION}.${_MINOR_VERSION}.${_PATCH_VERSION})
-
 ##########################
 ##  INSTALL PARAMETERS  ##
 ##########################
 # Offer the user the choice of overriding the installation directories
 set(CMAKE_INSTALL_PREFIX install)
-set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
-set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
-set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
-set(INSTALL_CMAKE_DIR cmake/Modules CACHE PATH "Installation directory for CMake files")
+set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/")
 
 #####################
 ##  DOCUMENTATION  ##
 #####################
 #add_subdirectory(doc)
 
-# Make relative paths absolute (needed later on)
-foreach(p LIB BIN INCLUDE CMAKE)
-  set(var INSTALL_${p}_DIR)
-  if(NOT IS_ABSOLUTE "${${var}}")
-    set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
-  endif()
-endforeach()
-
 ##############################
 ##  COMPILATION PARAMETERS  ##
 ##############################
-set(CMAKE_CXX_STANDARD   11)
+set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+set(BUILD_SHARED_LIBS ON)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 enable_testing()
 
