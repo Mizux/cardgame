@@ -15,3 +15,5 @@ file(GLOB_RECURSE _QRCS "data/*.qrc")
 
 add_executable(${PROJECT_NAME} ${_SRCS} ${_QRCS})
 target_link_libraries(${PROJECT_NAME} libcard Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml)
+
+install(TARGETS ${PROJECT_NAME}	DESTINATION bin)
