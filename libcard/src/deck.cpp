@@ -1,6 +1,7 @@
 #include <card/deck.hpp>
 
 #include <algorithm>
+#include <random>
 
 namespace cg {
 Deck::Deck(std::string&& name) : m_name(name), m_cards() {}
