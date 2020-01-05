@@ -1,41 +1,27 @@
-sudo: false
-language: cpp
+# https://docs.travis-ci.com/user/languages/minimal-and-generic/
+language: minimal
+dist: bionic
 
-compiler:
- - clang
- - gcc
+# no install step to perform
+install: true
 
-env:
-  matrix:
-    - CONF=debug   ARCH=x86_64
-    - CONF=release ARCH=x86_64
-  global:
-    - ARCH_FLAGS_x86_64=''
-    - secure: "todo"
-
-addons:
-  apt:
-   sources:
-   - ubuntu-toolchain-r-test # gcc5.2
-   - george-edison55-precise-backports # cmake doxygen
-   packages:
-   - gcc-5
-   - g++-5
-   - cmake
-   - cmake-data
-   - doxygen
-   - qtbase5-dev
-   - qtdeclarative5-dev
-
-install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-
+# When a script command fails, travis run the next one so we must use
+# `travis_terminate 1`
 script:
- - mkdir -v build
- - eval "ARCH_FLAGS=\${ARCH_FLAGS_${ARCH}}" \
-   && cd build
-   && cmake \
-   -DCMAKE_VERBOSE_MAKEFILE=ON \
-   -DCMAKE_BUILD_TYPE=$CONF \
-   -DCMAKE_CXX_FLAGS="$ARCH_FLAGS" ..
- - make
+  - >
+    echo 'travis_fold:start:build_env'
+    && make env
+    && echo 'travis_fold:end:build_env'
+    || travis_terminate 1
+
+  - >
+    echo 'travis_fold:start:build_devel'
+    && make devel
+    && echo 'travis_fold:end:build_devel'
+    || travis_terminate 1
+
+  - >
+    echo 'travis_fold:start:test_devel'
+    && make test_devel
+    && echo 'travis_fold:end:test_devel'
+    || travis_terminate 1
