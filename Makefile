@@ -88,7 +88,13 @@ run_env: cache/docker_env.tar
 # Build the devel image.
 .PHONY: devel
 devel: cache/docker_devel.tar
-cache/docker_devel.tar: docker/Dockerfile cache/docker_env.tar CMakeLists.txt src .dockerignore
+cache/docker_devel.tar: \
+ docker/Dockerfile \
+ cache/docker_env.tar \
+ CMakeLists.txt \
+ cardapp \
+ libcard \
+ .dockerignore
 	mkdir -p cache
 	@docker image rm -f ${IMAGE}:devel 2>/dev/null
 	${DOCKER_BUILD_CMD} --target=devel -t ${IMAGE}:devel -f $< .

@@ -1,0 +1,15 @@
+# Project Files unneeded by docker
+.git
+.gitignore
+README.md
+Makefile
+docker/
+.dockerignore
+.travis.yml
+.clang-format
+
+build/
+cache/
+
+# Editor directories and files
+*.user
