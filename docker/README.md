@@ -12,13 +12,13 @@ From [alpine:latest](https://hub.docker.com/r/alpine/)
 * [doxygen](https://pkgs.alpinelinux.org/package/edge/main/x86_64/doxygen)
 * [graphviz](https://pkgs.alpinelinux.org/package/edge/main/x86_64/graphviz)
 
-## Manual Build Environment 
+## Manual Build Environment
 You can build an env image using:
 ```sh
 make build_env
 ```
 
-## Manual Build 
+## Manual Build
 You can build a devel env image using:
 ```sh
 make build_devel
