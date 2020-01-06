@@ -22,6 +22,7 @@ help:
 	@echo
 	@echo -e "\t${BOLD}devel${RESET}: build the app in a devel image."
 	@echo -e "\t${BOLD}run_devel${RESET}: run a container using the devel image (debug purpose)."
+	@echo -e "\t${BOLD}test_devel${RESET}: auto test using the devel image."
 	@echo
 	@echo -e "\t${BOLD}clean${RESET}: Remove log files and docker image."
 	@echo
@@ -105,6 +106,11 @@ cache/docker_devel.tar: \
 .PHONY: run_devel
 run_devel: cache/docker_devel.tar
 	${DOCKER_RUN_CMD} -it ${IMAGE}:devel /bin/sh
+
+# Run a container using the devel image.
+.PHONY: test_devel
+test_devel: cache/docker_devel.tar
+	${DOCKER_RUN_CMD} -it ${IMAGE}:devel cmake --build build --target test
 
 #########
 # CLEAN #
