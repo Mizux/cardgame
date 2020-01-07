@@ -5,7 +5,7 @@ LABEL maintainer="mizux.dev@gmail.com"
 # Install system build dependencies
 ENV PATH=$PATH:/usr/local/bin
 RUN apk add --no-cache \
- g++ clang make cmake \
+ git g++ clang make cmake \
  doxygen graphviz \
  qt5-qtbase-dev ttf-freefont
 
