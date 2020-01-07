@@ -1,50 +1,59 @@
-cmake_minimum_required(VERSION 3.2)
-project(CardGame)
+cmake_minimum_required(VERSION 3.14)
 
-##########################
-##  INSTALL PARAMETERS  ##
-##########################
-# Offer the user the choice of overriding the installation directories
-set(CMAKE_INSTALL_PREFIX install)
-set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/")
+# Apple: Don't modify install_name when touching RPATH.
+if(POLICY CMP0068)
+  cmake_policy(SET CMP0068 NEW)
+endif()
 
-#####################
-##  DOCUMENTATION  ##
-#####################
-#add_subdirectory(doc)
+project(CardGame VERSION 1.0 LANGUAGES CXX)
 
-##############################
-##  COMPILATION PARAMETERS  ##
-##############################
-set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
-set(BUILD_SHARED_LIBS ON)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+# Force default build type to Release
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING
+    "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel."
+    FORCE
+    )
+endif(NOT CMAKE_BUILD_TYPE)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(ENABLE_TEST OFF CACHE BOOL "Build test: [ON/off]")
 
-############
-##  TEST  ##
-############
-if(ENABLE_TEST)
-enable_testing()
-configure_file(
-	googletest.in
-	${CMAKE_BINARY_DIR}/googletest/CMakeLists.txt)
-execute_process(
-	COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest)
-execute_process(
-	COMMAND ${CMAKE_COMMAND} --build .
-	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest)
-# Add googletest directly to our build.
-# This adds the following targets: gtest, gtest_main, gmock and gmock_main
-add_subdirectory(
-  ${CMAKE_BINARY_DIR}/googletest/src
-  ${CMAKE_BINARY_DIR}/googletest/build)
+if(APPLE)
+  set(CMAKE_INSTALL_RPATH "@loader_path;@loader_path/../lib")
+else()
+  set(CMAKE_INSTALL_RPATH "$ORIGIN:$ORIGIN/../lib")
+endif()
+
+if(UNIX)
+  set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+  option(BUILD_SHARED_LIBS "Build shared libraries(.so or .dylib)." ON)
+else()
+  # only support for static build on Windows.
+  set(BUILD_SHARED_LIBS OFF)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+endif()
+
+#add_subdirectory(doc)
+
+include(CTest)
+include(FetchContent)
+if(BUILD_TESTING)
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.10.0
+    )
+  FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v2.5.0
+    )
+  FetchContent_MakeAvailable(googletest Catch2)
 endif()
 
 add_subdirectory(libcard)
