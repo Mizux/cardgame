@@ -93,8 +93,8 @@ cache/docker_devel.tar: \
  docker/Dockerfile \
  cache/docker_env.tar \
  CMakeLists.txt \
- cardapp \
- libcard \
+ libCard \
+ card \
  .dockerignore
 	mkdir -p cache
 	@docker image rm -f ${IMAGE}:devel 2>/dev/null
