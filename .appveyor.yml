@@ -8,6 +8,9 @@ configuration:
 
 environment:
   MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
+  # https://www.appveyor.com/docs/windows-images-software/#qt
+  Qt5_INSTALL_DIR: 'C:\Qt\5.13\msvc2017_64'
+  
   matrix:
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     CMAKE_GENERATOR: "Visual Studio 16 2019"
