@@ -56,6 +56,7 @@ if(BUILD_TESTING)
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
     GIT_TAG v2.5.0
     )
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   FetchContent_MakeAvailable(googletest Catch2)
 endif()
 
