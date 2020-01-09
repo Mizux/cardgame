@@ -9,7 +9,10 @@ find_package(Qt5Widgets REQUIRED)
 file(GLOB_RECURSE _SRCS "src/*.[hc]pp")
 file(GLOB_RECURSE _QRCS "data/*.qrc")
 
-add_executable(cardapp ${_SRCS} ${_QRCS})
-target_link_libraries(cardapp card Qt5::Core Qt5::Gui Qt5::Widgets)
+add_executable(card ${_SRCS} ${_QRCS})
+target_link_libraries(card Card::Card Qt5::Core Qt5::Gui Qt5::Widgets)
 
-install(TARGETS cardapp DESTINATION bin)
+install(
+	TARGETS card
+	EXPORT CardTargets
+	DESTINATION bin)
