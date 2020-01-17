@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: configure
+    - name: info
       run: |
         cmake --version
-        cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
-    - name: build
-      run: cmake --build build --config Release --target all
+        docker info
+    - name: env
+      run: make env
+    - name: devel
+      run: make devel
     - name: test
-      run: cmake --build build --config Release --target test
+      run: make test_devel
