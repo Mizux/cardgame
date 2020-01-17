@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build env
+    - name: Setup env
       run: make env
     - name: Build project
       run: make devel
+    - name: Test project
+      run: make test_devel
