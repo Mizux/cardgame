@@ -1,0 +1,17 @@
+name: C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      run: |
+        cmake --version
+        cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+    - name: build
+      run: cmake --build build --config Release --target all
+    - name: test
+      run: cmake --build build --config Release --target test
