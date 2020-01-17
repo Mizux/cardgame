@@ -54,10 +54,7 @@ else
 DOCKER_BUILD_CMD := docker build
 endif
 
-DOCKER_RUN_CMD := docker run --rm --init \
- --name ${IMAGE} --net=host \
- --env="DISPLAY" \
- --volume="${HOME}/.Xauthority:/root/.Xauthority:rw"
+DOCKER_RUN_CMD := docker run --rm --init --name ${IMAGE}
 
 # $* stem
 # $< first prerequist
