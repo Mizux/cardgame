@@ -7,13 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: info
-      run: |
-        cmake --version
-        docker info
-    - name: env
+    - name: Build env
       run: make env
-    - name: devel
+    - name: Build project
       run: make devel
-    - name: test
-      run: make test_devel
