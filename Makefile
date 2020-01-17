@@ -54,7 +54,10 @@ else
 DOCKER_BUILD_CMD := docker build
 endif
 
-DOCKER_RUN_CMD := docker run --rm --init --name ${IMAGE}
+DOCKER_RUN_CMD := docker run --rm --init \
+ --name ${IMAGE} --net=host \
+ --env="DISPLAY" \
+ --volume="${HOME}/.Xauthority:/root/.Xauthority:rw"
 
 # $* stem
 # $< first prerequist
@@ -107,7 +110,7 @@ run_devel: cache/docker_devel.tar
 # Run a container using the devel image.
 .PHONY: test_devel
 test_devel: cache/docker_devel.tar
-	${DOCKER_RUN_CMD} -it ${IMAGE}:devel cmake --build build --target test
+	${DOCKER_RUN_CMD} -t ${IMAGE}:devel cmake --build build --target test
 
 #########
 # CLEAN #
