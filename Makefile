@@ -80,7 +80,7 @@ cache/docker_env.tar: docker/Dockerfile
 # Run a container using the env image.
 .PHONY: run_env
 run_env: cache/docker_env.tar
-	${DOCKER_RUN_CMD} -it ${IMAGE}:env /bin/sh
+	${DOCKER_RUN_CMD} -it ${IMAGE}:env
 
 
 #########
@@ -105,7 +105,7 @@ cache/docker_devel.tar: \
 # Run a container using the devel image.
 .PHONY: run_devel
 run_devel: cache/docker_devel.tar
-	${DOCKER_RUN_CMD} -it ${IMAGE}:devel /bin/sh
+	${DOCKER_RUN_CMD} -it ${IMAGE}:devel
 
 # Run a container using the devel image.
 .PHONY: test_devel
