@@ -34,7 +34,7 @@ help:
 # Need to add cmd_distro to PHONY otherwise target are ignored since they do not
 # contain recipe (using FORCE do not work here)
 .PHONY: all
-all: serve
+all: run_devel
 
 # Delete all implicit rules to speed up makefile
 MAKEFLAGS += --no-builtin-rules
@@ -50,10 +50,11 @@ IMAGE := ${PROJECT}
 
 ifdef NOCACHE
 DOCKER_BUILD_CMD := docker build --no-cache
+DOCKER_BUILDX_CMD := docker buildx build --no-cache
 else
 DOCKER_BUILD_CMD := docker build
+DOCKER_BUILDX_CMD := docker buildx build
 endif
-
 DOCKER_RUN_CMD := docker run --rm --init \
  --name ${IMAGE} --net=host \
  --env="DISPLAY" \
@@ -73,7 +74,7 @@ env: cache/docker_env.tar
 cache/docker_env.tar: docker/Dockerfile
 	mkdir -p cache
 	@docker image rm -f ${IMAGE}:env 2>/dev/null
-	${DOCKER_BUILD_CMD} --target=env -t ${IMAGE}:env -f $< .
+	${DOCKER_BUILD_CMD} --target=env --tag ${IMAGE}:env -f $< .
 	@rm -f $@
 	docker save ${IMAGE}:env -o $@
 
