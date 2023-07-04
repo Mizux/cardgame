@@ -1,7 +1,7 @@
 # Create a virtual environment with all tools installed
 # ref: https://hub.docker.com/_/alpine
 FROM alpine:edge AS env
-LABEL maintainer="mizux.dev@gmail.com"
+
 # Install system build dependencies
 ENV PATH=$PATH:/usr/local/bin
 RUN apk add --no-cache \
@@ -28,7 +28,7 @@ CMD [ "/bin/sh" ]
 
 # Create a production image
 FROM alpine:edge AS prod
-LABEL maintainer="mizux.dev@gmail.com"
+
 # Install system runtime dependencies
 ENV PATH=$PATH:/usr/local/bin
 RUN apk add --no-cache qt5-qtbase ttf-freefont
