@@ -1,13 +1,8 @@
 # This file is just an orchestration
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.18)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(CMAKE_EXPORT_COMPILE_COMMANDS "Export compile command" TRUE)
-
-# Apple: Don't modify install_name when touching RPATH.
-if(POLICY CMP0068)
-  cmake_policy(SET CMP0068 NEW)
-endif()
 
 project(CardGame VERSION 1.0 LANGUAGES CXX)
 set(PROJECT_NAMESPACE CardGame)
@@ -81,12 +76,12 @@ if(BUILD_TESTING)
   FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG release-1.10.0)
+    GIT_TAG v1.14.0)
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   FetchContent_Declare(
     Catch2
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v2.13.4)
+    GIT_TAG v3.5.2)
   FetchContent_MakeAvailable(googletest Catch2)
 endif()
 
