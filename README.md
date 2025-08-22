@@ -1,6 +1,63 @@
-[![Actions Status](https://github.com/Mizux/cardgame/workflows/C++%20CI/badge.svg)](https://github.com/Mizux/cardgame/actions)
-[![Master Status](https://travis-ci.com/Mizux/cardgame.svg?branch=master)](https://travis-ci.com/Mizux/cardgame)
-[![Build status](https://ci.appveyor.com/api/projects/status/4wclcju48ibgie1w/branch/master?svg=true)](https://ci.appveyor.com/project/Mizux/cardgame/branch/master)
+Github-CI:<br>
+[![Build Status][amd64_linux_status]][amd64_linux_link]
+[![Build Status][amd64_macos_status]][amd64_macos_link]
+[![Build Status][arm64_macos_status]][arm64_macos_link]
+[![Build Status][amd64_windows_status]][amd64_windows_link]<br>
+
+[![Build Status][amd64_docker_status]][amd64_docker_link]
+[![Build Status][arm64_docker_status]][arm64_docker_link]
+[![Build Status][riscv64_docker_status]][riscv64_docker_link]<br>
+
+[amd64_linux_status]: ./../../actions/workflows/amd64_linux_cmake.yml/badge.svg
+[amd64_linux_link]: ./../../actions/workflows/amd64_linux_cmake.yml
+[amd64_macos_status]: ./../../actions/workflows/amd64_macos_cmake.yml/badge.svg
+[amd64_macos_link]: ./../../actions/workflows/amd64_macos_cmake.yml
+[arm64_macos_status]: ./../../actions/workflows/arm64_macos_cmake.yml/badge.svg
+[arm64_macos_link]: ./../../actions/workflows/arm64_macos_cmake.yml
+[amd64_windows_status]: ./../../actions/workflows/amd64_windows_cmake.yml/badge.svg
+[amd64_windows_link]: ./../../actions/workflows/amd64_windows_cmake.yml
+
+[amd64_docker_status]: ./../../actions/workflows/amd64_docker_cmake.yml/badge.svg
+[amd64_docker_link]: ./../../actions/workflows/amd64_docker_cmake.yml
+[arm64_docker_status]: ./../../actions/workflows/arm64_docker_cmake.yml/badge.svg
+[arm64_docker_link]: ./../../actions/workflows/arm64_docker_cmake.yml
+[riscv64_docker_status]: ./../../actions/workflows/riscv64_docker_cmake.yml/badge.svg
+[riscv64_docker_link]: ./../../actions/workflows/riscv64_docker_cmake.yml
 
 # Card Game
 Card Game Framework
+
+## Build
+
+To build the C++ project, as usual:
+
+```sh
+cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build build --config Release --target test
+```
+
+## Appendices
+
+Few links on the subject...
+
+### Resources
+
+Project layout:
+* [The Pitchfork Layout Revision 1 (cxx-pflR1)](https://github.com/vector-of-bool/pitchfork)
+
+CMake:
+* https://llvm.org/docs/CMakePrimer.html
+* https://cliutils.gitlab.io/modern-cmake/
+* https://cgold.readthedocs.io/en/latest/
+
+# Contributing
+
+The [CONTRIBUTING.md](./CONTRIBUTING.md) file contains instructions on how to
+file the Contributor License Agreement before sending any pull requests (PRs).
+Of course, if you're new to the project, it's usually best to discuss any
+proposals and reach consensus before sending your first PR.
+
+## License
+
+Apache 2. See the LICENSE file for details.
